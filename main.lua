@@ -1,4 +1,4 @@
---[[ I used the iPad Pro, but I configured the config.lua file,
+--[[ I used the iPad Pro emulator, but I configured the config.lua file,
 so it can display correctly on any device ]]--
 
 display.setStatusBar(display.HiddenStatusBar)
