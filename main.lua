@@ -14,7 +14,7 @@ local f = csv.open(csv_path)
 local function createBall(fields)
     
     local radius = fields[2]/110;
-    local x = radius + 550 * math.random(); -- ideally I would like to not use hard coded values
+    local x = radius + 550 * math.random(); 
     local y = radius + 670 * math.random();
     
     local ball = display.newCircle(x, y, radius, weight, mileage);
@@ -82,7 +82,7 @@ function update()
         if (ball[1].y + ball.deltaY > display.contentHeight - offset - ball.radius) or (ball[1].y + ball.deltaY < ball.radius) then
             ball.deltaY = -ball.deltaY;
         end
-
+        -- each item in the ball group so the circle and the text needs to change direction
         ball[1].x = ball[1].x + ball.deltaX;
         ball[1].y = ball[1].y + ball.deltaY;
         ball[2].x = ball[2].x + ball.deltaX;
