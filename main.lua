@@ -17,10 +17,11 @@ local function createBall(fields)
     local x = radius + 550 * math.random(); 
     local y = radius + 670 * math.random();
     
-    local ball = display.newCircle(x, y, radius, weight, mileage);
+    local ball = display.newCircle(x, y, radius, weight, mileage, typeOfCar);
     ball.weight = fields[2]
     ball.mileage = fields[4] 
-    ball.radius = radius;
+    ball.radius = radius
+    ball.typeOfCar = fields[6]
     local group = display.newGroup()
     group:insert(ball)
     
@@ -131,8 +132,8 @@ end
 
 local weightBtn = widget.newSwitch(
     {
-        left = 350,
-        top = 800,
+        left = 650,
+        top = 820,
         style = "radio",
         id = "weightBtn",
         initialSwitchState = true,
@@ -143,7 +144,7 @@ local weightBtn = widget.newSwitch(
 local mileageBtn = widget.newSwitch(
     {
         left = 650,
-        top = 800,
+        top = 920,
         style = "radio",
         id = "mileageBtn",
         initialSwitchState = false,
@@ -151,8 +152,8 @@ local mileageBtn = widget.newSwitch(
     }
 )
 
-local weightBtnLabel = display.newText("Weight", 360, 760, native.systemFont, 40)
-local mileageBtnLabel = display.newText("Mileage", 660, 760, native.systemFont, 40)
+local weightBtnLabel = display.newText("Weight", 660, 780, native.systemFont, 40)
+local mileageBtnLabel = display.newText("Mileage", 670, 890, native.systemFont, 40)
 
 
 -- if user hits toggle button first raw values will have been calculated
@@ -167,21 +168,165 @@ local function onSwitchPressCheck( event )
     updateText()
 end
 
--- Create the widget
+local function colorFilter( event )
+    updateScreen()
+end
+
+
+
+
+local sheetOptions = {
+    width = 100,
+    height = 100,
+    numFrames = 4,
+    sheetContentWidth = 400,
+    sheetContentHeight = 100
+}
+local checkboxSheet = graphics.newImageSheet( "checkboxSheet.png", sheetOptions )
+
+
+
+
+-- Toggle widget
 local toggleBtn = widget.newSwitch(
     {
         left = 650,
-        top = 1000,
+        top = 1060,
         style = "checkbox",
         id = "toggleBtn",
         initialSwitchState = true,
-        onPress = onSwitchPressCheck
+        onPress = onSwitchPressCheck,
+    }
+)
+
+-- CheckBoxes for Car Filtering
+-- Small 
+local smallCarBtn = widget.newSwitch(
+    {
+        left = 60,
+        top = 820,
+        style = "checkbox",
+        id = "smallCarBtn",
+        initialSwitchState = true,
+        onPress = colorFilter,
+        sheet = checkboxSheet,
+        frameOff = 3,
+        frameOn = 4
+    }
+)
+
+-- Sporty
+local sportyCarBtn = widget.newSwitch(
+    {
+        left = 140,
+        top = 820,
+        style = "checkbox",
+        id = "sportyCarBtn",
+        initialSwitchState = true,
+        onPress = colorFilter,
+        sheet = checkboxSheet,
+        frameOff = 3,
+        frameOn = 4
     }
 )
 
 
-local toggleLabel = display.newText("Toggle (% or Raw Val)", 680, 960, native.systemFont, 28)
+-- Compact
+local compactCarBtn = widget.newSwitch(
+    {
+        left = 230,
+        top = 820,
+        style = "checkbox",
+        id = "compactCarBtn",
+        initialSwitchState = true,
+        onPress = colorFilter,
+        sheet = checkboxSheet,
+        frameOff = 3,
+        frameOn = 4
+    }
+)
 
+-- Medium
+local mediumCarBtn = widget.newSwitch(
+    {
+        left = 320,
+        top = 820,
+        style = "checkbox",
+        id = "MediumCarBtn",
+        initialSwitchState = true,
+        onPress = colorFilter,
+        sheet = checkboxSheet,
+        frameOff = 3,
+        frameOn = 4
+    }
+)
+
+-- Large
+local largeCarBtn = widget.newSwitch(
+    {
+        left = 400,
+        top = 820,
+        style = "checkbox",
+        id = "largeCarBtn",
+        initialSwitchState = true,
+        onPress = colorFilter,
+        sheet = checkboxSheet,
+        frameOff = 3,
+        frameOn = 4
+    }
+)
+
+-- Van
+local vanCarBtn = widget.newSwitch(
+    {
+        left = 460,
+        top = 820,
+        style = "checkbox",
+        id = "vanCarBtn",
+        initialSwitchState = true,
+        onPress = colorFilter,
+        sheet = checkboxSheet,
+        frameOff = 3,
+        frameOn = 4
+    }
+)
+
+
+local toggleLabel = display.newText("Toggle (% or Raw Val)", 680, 1020, native.systemFont, 28)
+local smallCarLabel = display.newText("Small", 80, 780, native.systemFont, 22)
+local sportyCarLabel = display.newText("Sporty", 150, 780, native.systemFont, 22)
+local compactCarLabel = display.newText("Compact", 240, 780, native.systemFont, 22)
+local mediumCarLabel = display.newText("Medium", 340, 780, native.systemFont, 22)
+local largeCarLabel = display.newText("Large", 420, 780, native.systemFont, 22)
+local vanCarLabel = display.newText("Van", 480, 780, native.systemFont, 22)
+
+
+function updateScreen()
+    for _, ball in ipairs(balls) do
+        if ((ball[1].typeOfCar == "Small") and (smallCarBtn.isOn == false)) then
+            ball[1].isVisible = false
+            ball[2].isVisible = false
+        elseif((ball[1].typeOfCar == "Sporty") and (sportyCarBtn.isOn == false)) then
+            ball[1].isVisible = false
+            ball[2].isVisible = false
+        elseif((ball[1].typeOfCar == "Compact") and (compactCarBtn.isOn == false)) then
+            ball[1].isVisible = false
+            ball[2].isVisible = false
+        elseif((ball[1].typeOfCar == "Medium") and (mediumCarBtn.isOn == false)) then
+            ball[1].isVisible = false
+            ball[2].isVisible = false
+        elseif((ball[1].typeOfCar == "Large") and (largeCarBtn.isOn == false)) then
+            ball[1].isVisible = false
+            ball[2].isVisible = false
+        elseif((ball[1].typeOfCar == "Van") and (vanCarBtn.isOn == false)) then
+            ball[1].isVisible = false
+            ball[2].isVisible = false
+        else
+            ball[1].isVisible = true
+            ball[2].isVisible = true
+        end
+    end
+end
 
 function updateText()
     if(minSlider.value > maxSlider.value) then
